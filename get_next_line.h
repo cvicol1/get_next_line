@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: cvicol <cvicol@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:53:48 by cvicol            #+#    #+#             */
-/*   Updated: 2024/05/31 07:13:47 by cvicol           ###   ########.fr       */
+/*   Updated: 2024/05/31 16:44:30 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@
 #  define BUFFER_SIZE 42
 # endif
 
-size_t	ft_strlen(const char *s);
 void	*ft_memmove(void *dst, const void *src, size_t n);
 char	*ft_strdup(const char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoin(char const *s1, char const *s2);
+char	*read_from_file(int fd);
 char	*get_next_line(int fd);
 
 #endif

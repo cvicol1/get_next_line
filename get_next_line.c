@@ -3,38 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
+/*   By: cvicol <cvicol@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:53:41 by cvicol            #+#    #+#             */
-/*   Updated: 2024/05/31 08:04:01 by cvicol           ###   ########.fr       */
+/*   Updated: 2024/05/31 17:32:17 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
-
-char	*read_from_file(int fd)
-{
-	char	*buff;
-	int		n;
-
-	buff = malloc(BUFFER_SIZE + 1);
-	if (!buff)
-		return (NULL);
-	n = read(fd, buff, BUFFER_SIZE);
-	if (n <= 0)
-	{
-		free(buff);
-		buff = NULL;
-		return (NULL);
-	}
-	if (read(fd, 0, 0) < 0)
-	{
-		free (buff);
-		buff = NULL;
-	}
-	buff[n] = '\0';
-	return (buff);
-}
 
 char	*append_to_buffer(char *final, char *buff)
 {
@@ -49,48 +25,58 @@ char	*append_to_buffer(char *final, char *buff)
 	return (final);
 }
 
-char	*read_next_buf(int fd, char *aux)
+int	extra(char **final, char ***aux, int fd)
 {
 	char	*buff;
+
+	buff = read_from_file(fd);
+	if (!buff)
+	{
+		if (*final[0] != '\0')
+		{
+			free (**aux);
+			**aux = NULL;
+			return (1);
+		}
+		free(*final);
+		*final = NULL;
+		free (**aux);
+		**aux = NULL;
+		return (0);
+	}
+	*final = append_to_buffer(*final, buff);
+	if (!*final)
+	{
+		free (**aux);
+		**aux = NULL;
+		return (0);
+	}
+	return (2);
+}
+
+char	*read_next_buf(int fd, char **aux)
+{
 	char	*final;
 
-	if (aux)
-		final = ft_strdup(aux);
+	if (*aux)
+		final = ft_strdup(*aux);
 	else
 		final = ft_strdup("");
 	if (!final)
 	{
-		free (aux);
-		aux = NULL;
+		free (*aux);
+		*aux = NULL;
 		return (NULL);
 	}
 	while (ft_strchr(final, '\n') == NULL)
 	{
-		buff = read_from_file(fd);
-		if (!buff)
-		{
-			if (final[0] != '\0')
-			{
-				free (aux);
-				aux = NULL;
-				return (final);
-			}
-			free(final);
-			final = NULL;
-			free (aux);
-			aux = NULL;
+		if (extra(&final, &aux, fd) == 0)
 			return (NULL);
-		}
-		final = append_to_buffer(final, buff);
-		if (!final)
-		{
-			free (aux);
-			aux = NULL;
-			return (NULL);
-		}
+		else
+			return (final);
 	}
-	free (aux);
-	aux = NULL;
+	free (*aux);
+	*aux = NULL;
 	return (final);
 }
 
@@ -132,15 +118,9 @@ char	*get_next_line(int fd)
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buf = read_next_buf(fd, buf);
+	buf = read_next_buf(fd, &buf);
 	if (!buf)
 		return (NULL);
-	if (!buf[0])
-	{
-		free(buf);
-		buf = NULL;
-		return (NULL);
-	}
 	line = extract_line(buf);
 	newline_pos = ft_strchr(buf, '\n');
 	if (newline_pos)
