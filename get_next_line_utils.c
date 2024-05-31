@@ -6,7 +6,7 @@
 /*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:54:04 by cvicol            #+#    #+#             */
-/*   Updated: 2024/05/19 05:38:55 by cvicol           ###   ########.fr       */
+/*   Updated: 2024/05/30 04:35:41 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ char	*ft_strdup(const char *s)
 	int		i;
 
 	i = ft_strlen(s);
-	s1 = (char *)malloc(sizeof(char) * (i + 1));
+	s1 = malloc(sizeof(char) * (i + 1));
 	if (!s1)
 		return (NULL);
 	s1[i] = '\0';

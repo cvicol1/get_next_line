@@ -15,7 +15,6 @@ int main()
     return (0);
 }
 
-
 /*
 char	*read_next_buf(int fd, char *aux)
 {

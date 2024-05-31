@@ -6,7 +6,7 @@
 /*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/03 15:53:48 by cvicol            #+#    #+#             */
-/*   Updated: 2024/05/19 01:59:53 by cvicol           ###   ########.fr       */
+/*   Updated: 2024/05/31 07:13:47 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 42
 # endif
 
 size_t	ft_strlen(const char *s);
