@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line_bonus.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 15:53:41 by cvicol            #+#    #+#             */
-/*   Updated: 2024/06/08 07:00:51 by cvicol           ###   ########.fr       */
+/*   Created: 2024/06/08 07:02:04 by cvicol            #+#    #+#             */
+/*   Updated: 2024/06/08 07:06:08 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 char	*append_to_buffer(char *final, char *buff)
 {
@@ -91,28 +91,28 @@ char	*extract_line(char *buf)
 
 char	*get_next_line(int fd)
 {
-	static char	*buf;
+	static char	*buf[1024];
 	char		*line;
 	char		*newline_pos;
 	char		*new_buff;
 
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
-	buf = read_next_buf(fd, &buf);
-	if (!buf)
+	buf[fd] = read_next_buf(fd, &buf[fd]);
+	if (!buf[fd])
 		return (NULL);
-	if (!buf[0])
-		return (free(buf), buf = NULL, NULL);
-	line = extract_line(buf);
-	newline_pos = ft_strchr(buf, '\n');
+	if (!buf[fd][0])
+		return (free(buf[fd]), buf[fd] = NULL, NULL);
+	line = extract_line(buf[fd]);
+	newline_pos = ft_strchr(buf[fd], '\n');
 	if (newline_pos)
 	{
 		new_buff = ft_strdup(newline_pos + 1);
-		free(buf);
-		buf = NULL;
-		buf = new_buff;
+		free(buf[fd]);
+		buf[fd] = NULL;
+		buf[fd] = new_buff;
 		return (line);
 	}
 	else
-		return (free(buf), buf = (NULL), line);
+		return (free(buf[fd]), buf[fd] = (NULL), line);
 }

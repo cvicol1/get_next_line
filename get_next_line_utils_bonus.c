@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line_utils.c                              :+:      :+:    :+:   */
+/*   get_next_line_utils_bonus.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cvicol <cvicol@student.42madrid.com>       +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/05/03 15:54:04 by cvicol            #+#    #+#             */
-/*   Updated: 2024/06/07 05:30:12 by cvicol           ###   ########.fr       */
+/*   Created: 2024/06/08 07:03:45 by cvicol            #+#    #+#             */
+/*   Updated: 2024/06/08 07:03:51 by cvicol           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t n)
 {
